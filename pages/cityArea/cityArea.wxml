@@ -1,0 +1,28 @@
+<!--pages/cityList/cityList.wxml-->
+<view class="home-cityAreasList">
+  <text class="userCurrentAreaName">{{address}}</text><text>(当前地址)</text>
+  <view class="hotcityArea">
+    <view>热门商圈</view>
+    <view class="showHotCityAreas">
+      <scroll-view class="item-root" wx:for="{{hotAreas}}"  wx:key="key" bindtap="selectAreaAndGotoHome" data-id="{{item.id}}" data-area="{{item.area}}" data-searchcount="{{item.searchcount}}">
+      
+        <text class="item-area">{{item.area}}</text>
+        <text class="item-id">{{item.id}}</text>
+        <text class="item-id">{{item.searchcount}}</text>
+      </scroll-view> 
+    </view>
+  </view>
+  <view>-------------------</view>
+  <view class="allcityArea">
+    <view>全部商圈</view>
+    <view class="showAllCityAreas">
+      <scroll-view class="item-root" wx:for="{{allAreas}}"  wx:key="key" bindtap="selectAreaAndGotoHome" data-id="{{item.id}}" data-area="{{item.area}}" data-searchcount="{{item.searchcount}}">
+      
+        <text class="item-area">{{item.area}}</text>
+        <text class="item-id">{{item.id}}</text>
+        <text class="item-id">{{item.searchcount}}</text>
+      </scroll-view> 
+    </view>
+  </view>
+  <view class="city-tip" >小吃货正在为您开拓更多商圈，敬请期待</view>
+</view>

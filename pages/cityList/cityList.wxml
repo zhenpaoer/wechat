@@ -1,0 +1,15 @@
+<!--pages/cityList/cityList.wxml-->
+<view class="home-cityList">
+  <text class="userCurrentCityName">{{cityName}}</text><text>(当前城市)</text>
+  <view class="allcity">
+    <view>全部城市</view>
+    <view class="showAllCitys">
+      <scroll-view class="item-root" wx:for="{{cityNameList}}"  wx:key="key" bindtap="selectCityAndGotoHome" data-id="{{item.id}}" data-area="{{item.area}}">
+      
+        <text class="item-area">{{item.area}}</text>
+        <text class="item-id">{{item.id}}</text>
+      </scroll-view>
+    </view>
+  </view>
+  <view class="city-tip" >小吃货正在为您开拓更多城市，敬请期待</view>
+</view>

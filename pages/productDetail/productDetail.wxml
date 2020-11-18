@@ -1,0 +1,165 @@
+
+<view class="productdetail">
+    <!-- 图片滑动 -->
+    <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
+      <block wx:for="{{productPicurls}}" wx:key="key">
+        <swiper-item>
+          <image class="picurl"  mode='scaleToFill' src="{{item.picurl}}" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <!-- 商品详情 -->
+    <view class="pd desc">
+        <view class="p-productname">{{leProduct.productname}}</view>
+        <view class="price-info">
+            <text class="now-price">
+                <text class="after-price">￥</text>{{leProduct.bargainprice}}</text>
+            <text class="del-price">{{'￥'+leProduct.originalprice}}</text>
+        </view>
+        <view class="user-num" wx:if="{{leProduct.issale == 2}}">
+            <text class="user-num-text">{{leProduct.bargainpersonsum}}</text>人已砍</view>
+        <view class="user-num" wx:if="{{leProduct.issale == 1}}">已经抢光啦，明天早点来吧！</view>
+    </view> 
+    <!-- <detail-weixin bind:__l="__l" serviceWechat="{{serviceWechat}}" vueId="3db16520-2" wx:if="{{serviceWechat}}"></detail-weixin> -->
+    <!-- 服务规则 -->
+    <view class="service common-space" >
+        <view class="service-text">服务</view>
+        <view class="service-content">
+            <view class="service-item" wx:for="{{service}}" wx:key="item">
+                <image mode="service-img" src="{{item.icon}}"></image>
+                <text class="title">{{item.text}}</text>
+            </view>
+        </view>
+    </view>
+    <view class="rules common-space" >
+        <view class="rules-text">规则</view>
+        <view class="rules-content">
+            <view class="rules-usetime" >购买后{{leProduct.usetime}}天有效。</view>
+            <view class="rules-rule" wx:if="{{leProduct.rule&&leProduct.rule}}" >
+                <text class="rules-showrule">{{leProduct.rule}}</text>
+            </view>
+        </view>
+    </view>
+    <!-- 菜单 -->
+    <view class="menu-common-space">
+      <view class="menu-head">
+          <text class="menu head-text">菜单</text>
+      </view>
+      <view  class="{{menuBody}}">
+          <view wx:for="{{productMenuNodes}}" wx:for-item="menu"  wx:key="menu" wx:for-index="idx" class="menu-body {{idx>0 ? 'more-item' : ''}}" >
+              <view class="menu-title " >{{menu.title}}</view>
+              <block wx:for="{{menu.children}}" wx:for-item="children" wx:key="children">
+                <view class="children body">
+                  <text class="children name">{{children.item}}</text>
+                  <text class="children price">{{'￥'+children.price}}</text>
+                </view>    
+              </block>
+          </view>
+      </view>
+      <!-- <view wx:if="{{colNumShow}}" class='menu-more' bindtap='toggle'>{{readmore.tip}}</view> -->
+      <view class="menu-more" >
+        <block wx:if="{{productMenuNodes.length>0}}">
+          <view wx:if="{{showMore}}" class='shouqi' bindtap='listToggle'>
+            收起 
+            <icon class="shishuofont icon-list-close"></icon>
+          </view>
+          <view wx:else class='seemore' bindtap='listToggle'>
+            查看更多
+            <icon class="shishuofont icon-list-open"></icon>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view>ssssssssssssssssssssssss</view>
+    
+    <!-- 商家信息 -->
+    <view class="business common-space">
+      <view class="business-detail" >
+        <view class="business-section">
+          <view class="business-title">商家信息</view>
+        </view>
+        <view class="business-avatar">
+            <!-- 需要商家信息的logo -->
+            <image mode="aspectFit" src="{{leProduct.homepicture}}" wx:if="{{leProduct.homepicture}}"></image>
+            <image mode="aspectFit" src="https://img1.haoshiqi.net/miniapp/merchant_1a98f434ae.png" wx:else></image> 
+        </view>
+        <view class="business-info">
+            <view class="business-name">{{''+leProduct.businessname+''}}</view>
+             <!-- 需要商家信息的评价人数 及评分 -->
+            <view class="business-commentNum">{{''+leProduct.bargainpersonsum+''}}已评</view>
+            <!-- <view catchtap="__e" class="merchant-ugc" data-event-opts="{{[ [ 'tap',[ [ 'onStar',['$event'] ] ] ] ]}}" wx:if="{{model.commentNum>0}}">
+                <star bind:__l="__l" digit="{{model.rating}}" vueId="7b1cfa38-1"></star>
+                <view class="ugc-count">{{'('+model.commentNum+'人已评)'}}</view>
+            </view> -->
+        </view>
+        <view class="business-mobile" >
+            <image mode="aspectFit" src="https://img1.haoshiqi.net/miniapp/tel_9cb4b9030f.png"></image>
+        </view>
+        <view  class="comp-detail-address" >
+          <image mode="aspectFit" src="https://img1.haoshiqi.net/miniapp/local_b9bde8219e.png"></image>
+          <!-- 需要商家的地址 先拿 status 代替-->
+          <text>{{leProduct.status}}</text>
+        </view>
+
+      </view>
+      
+    </view>
+    <!-- 购买须知 -->
+    <!-- <view class="buy-tip common-space" wx:if="{{prod.tips_array.length||prod.tips}}">
+        <detail-section bind:__l="__l" title="购买须知" vueId="3db16520-10"></detail-section>
+        <detail-buy-tips bind:__l="__l" model="{{buyTip}}" vueId="3db16520-11"></detail-buy-tips>
+    </view> -->
+    <!-- 用户评价 -->
+    <!-- <view class="comment common-space" wx:if="{{comments.length}}">
+        <detail-section bind:__l="__l" title="用户评价" vueId="3db16520-12"></detail-section>
+        <comment-item bind:__l="__l" list="{{comments}}" vueId="3db16520-13"></comment-item>
+        <view bindtap="__e" class="go-comment-btn" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['goComment'] ] ] ] ]}}">查看全部</view>
+    </view> -->
+    <!-- <view class="recommentlist recommentlist-space" wx:if="{{preList.length}}">
+        <view class="recommentlist-title">
+            <image class="recommentlist-icon" src="http://img-agc.iqianggou.com/img/4PYUoh_recommentl_icon.png"></image>
+        </view>
+        <view class="pro-list list-type-card">
+            <product-item bind:__l="__l" bind:bargain="__e" bind:submit="__e" class="recommentlist-item" data-event-opts="{{[ [ '^bargain',[ ['doBargain'] ] ],[ '^submit',[ ['formidSubmit'] ] ] ]}}" list="{{preList}}" listName="preList" vueId="3db16520-14"></product-item>
+        </view>
+    </view>
+    <list-foot bind:__l="__l" finished="{{pagination.pageNum>pagination.totalPage}}" finishedTip="没有更多数据了" pullLoading="{{pagination.loading}}" vueId="3db16520-15"></list-foot>
+    <view class="detail-footer">
+        <view bindtap="__e" class="btn-merchant" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['merchant'] ] ] ] ]}}">
+            <dd-icon bind:__l="__l" fontName="iqgfont" size="20" type="shop" vueId="3db16520-16"></dd-icon>
+            <text>店铺</text>
+        </view>
+        <view class="btn-other">
+            <view class="disabled" wx:if="{{prod.isDisabled}}">{{prod.btnText}}</view>
+            <block wx:else>
+                <button bindtap="__e" class="{{['bargain-btn',btnDesc.btnState==3?'bargain-green':'']}}" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['bargain'] ] ] ] ]}}" openType="{{btnDesc.btnState==3?'share':''}}" wx:if="{{btnDesc.btnState==2||btnDesc.btnState==3}}">{{''+btnDesc.btnText+'btnDesc.btnState'}}</button>
+                <view bindtap="__e" class="{{['buy-btn',btnDesc.btnState==4?'buy-btn-width':'']}}" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['buybtn'] ] ] ] ]}}">{{prod.btnText}}</view>
+            </block>
+        </view>
+    </view>
+    <view bindtap="__e" class="dialog-bg" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['hideDialog'] ] ] ] ]}}" hidden="{{!showDialog}}"></view>
+    <view class="{{['dialog-coupon',showDialog?'dialog-coupon-show':'']}}">
+        <view class="dialog-content">
+            <view class="dialog-txt1">
+                <text class="dialog-t1">该活动今日已抢光</text>
+            </view>
+            <view class="dialog-txt2">
+                <text class="dialog-t2">看看这家店的其他优惠券</text>
+            </view>
+            <view bindtap="__e" class="dialog-ticket" data-event-opts="{{[ [ 'tap',[ [ 'goTicketDetail',['$0','$1','$2'],[ [ ['prod.activityList','id',item.id,'branch_id'] ],[ ['prod.activityList','id',item.id,'id'] ],[ ['prod.activityList','id',item.id,'type'] ] ] ] ] ] ]}}" wx:for="{{prod.activityList}}" wx:key="id">
+                <image class="dialog-ticket-img" mode="scaleToFill" src="{{item.head_pic}}"></image>
+                <view class="dialog-ticket-info">
+                    <view class="dialog-ticket-name ellipsis">{{item.title}}</view>
+                    <view class="dialog-zhuan-price flex" wx:if="{{item.type==1}}">
+                        <view>{{item.price_text}}</view>
+                        <view class="dialog-zhuan-tag">{{item.commission_price_text}}</view>
+                    </view>
+                    <view class="dialog-ticket-price" wx:else>{{item.price_text}}</view>
+                </view>
+                <image class="dialog-ticket-img" mode="scaleToFill" src="{{item.type==1?'https://img1.haoshiqi.net/miniapp/zhuan_dea7c028fc.png':'https://img1.haoshiqi.net/miniapp/coupon_ed27d26362.png'}}"></image>
+            </view>
+            <view bindtap="__e" class="dialog-coupon-close" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['hideDialog'] ] ] ] ]}}"></view>
+        </view>
+    </view> -->
+</view>
+

@@ -1,0 +1,6 @@
+{
+    "usingComponents": {
+        "foot": "/components/foot/foot"
+    },
+    "component": true
+}

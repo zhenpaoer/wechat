@@ -1,0 +1,4 @@
+<!--pages/searchProduct/searchProduct.wxml-->
+<text>pages/searchProduct/searchProduct.wxml</text>
+<dropdownmenu dropDownMenuTitle='{{dropDownMenuTitle}}' dropDownMenuDistrictData='{{dropDownMenuFirstData}}' dropDownMenuSourceData='{{dropDownMenuSecondData}}' dropDownMenuStyleData='{{dropDownMenuThirdData}}' dropDownMenuFilterData='{{dropDownMenuFourthData}}'
+  bind:selectedItem='selectedItem' />

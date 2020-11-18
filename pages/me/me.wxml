@@ -1,0 +1,35 @@
+<view class="page index">
+    <form bindsubmit="__e" class="data-v-38fd52d0" data-event-opts="{{[ [ 'submit',[ [ 'formidSubmit',['$event'] ] ] ] ]}}" reportSubmit="{{true}}">
+        <button class="data-v-38fd52d0" formType="submit" id="formid"></button>
+    </form>
+    <view class="header-box data-v-38fd52d0">
+        <view bindtap="__e" class="header-user data-v-38fd52d0" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['login'] ] ] ] ]}}">
+            <view class="header-img-box data-v-38fd52d0">
+                <image class="header-img data-v-38fd52d0" mode="scaleToFill" src="{{user.avatar}}" wx:if="{{user.avatar}}"></image>
+                <image class="header-img-unlog data-v-38fd52d0" mode="scaleToFill" src="https://img1.haoshiqi.net/miniapp/avatar_8cb1ef15de.png" wx:else></image>
+            </view>
+            <view class="header-info data-v-38fd52d0">
+                <block wx:if="{{user.id}}">
+                    <view class="header-nickname ellipsis data-v-38fd52d0">{{user.username}}</view>
+                    <view class="header-uid data-v-38fd52d0">{{'ID:'+user.id}}</view>
+                </block>
+                <view class="header-unlog data-v-38fd52d0" wx:else>点击登录</view>
+            </view>
+        </view>
+        <view class="header-tags data-v-38fd52d0">
+            <view bindtap="__e" class="header-tag-item border-right data-v-38fd52d0" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['gold'] ] ] ] ]}}">
+                <view class="header-tag-num data-v-38fd52d0">{{user.coin||'—'}}</view>
+                <view class="header-tag-name data-v-38fd52d0">金币</view>
+            </view>
+            <view bindtap="__e" class="header-tag-item border-right data-v-38fd52d0" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['coupon'] ] ] ] ]}}">
+                <view class="header-tag-num data-v-38fd52d0">{{user.coupon_count||'—'}}</view>
+                <view class="header-tag-name data-v-38fd52d0">券包</view>
+            </view>
+            <view bindtap="__e" class="header-tag-item data-v-38fd52d0" data-event-opts="{{[ [ 'tap',[ [ 'goNext',['favorite'] ] ] ] ]}}">
+                <view class="header-tag-num data-v-38fd52d0">{{user.user_favorite_count||'—'}}</view>
+                <view class="header-tag-name data-v-38fd52d0">收藏</view>
+            </view>
+        </view>
+        <view class="data-v-38fd52d0" style="height:20px;" wx:if="{{!logged}}"></view>
+    </view>
+</view>

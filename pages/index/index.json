@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "小吃货",
+  "usingComponents": {
+    "dropdownmenu": "/components/dropdownmenu/dropdownmenu"
+  }
+}

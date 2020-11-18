@@ -1,0 +1,5 @@
+<view class="comp-list-foot">
+    <image binderror="__e" class="img" data-event-opts="{{[ [ 'error',[ [ 'imageError',['$event'] ] ] ] ]}}" mode="scaleToFill" src="https://img1.haoshiqi.net/miniapp/img/loading_50c5e3e79b.gif" wx:if="{{pullLoading}}"></image>
+    <view class="txt" wx:if="{{pullLoading&&loadingTip}}">{{loadingTip}}</view>
+    <view wx:if="{{finished}}">{{finishedTip}}</view>
+</view>

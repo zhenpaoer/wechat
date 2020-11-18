@@ -1,0 +1,44 @@
+<view class="page-index">
+	<view class="home-city">
+		<text class="home-getusercity" bindtap="getoCityList">{{cityName}}▽</text>
+		<!-- 去掉商圈 -->
+		<!-- <text class="home-getuserarea" bindtap="getoCityArea"> {{area}}▽</text>   -->
+		<text class="home-getuseraddress" >    {{address}}</text>
+	</view>
+	<view class="home-search-box" bindtap="getoSearchProduct">
+		<view class="home-search-in">
+			<image class="home-search-img" mode="scaleToFill" src="https://img1.haoshiqi.net/miniapp/magnifier_cdb3a6e455.png"></image>搜索店铺名或菜品
+		</view>
+	</view>
+	<view class="home-dropDownMenu">
+		<!-- 下拉列表标题 -->
+		<dropdownmenu id='dropDownMenu' dropDownMenuTitle='{{dropDownMenuTitle}}' dropDownMenuDistrictData='{{nearbyData}}' dropDownMenuSourceData='{{data2}}' dropDownMenuStyleData='{{data3}}' dropDownMenuFilterData='{{data4}}' 
+									bind:selectedItem='selectedItem' bind:reset='reset' bind:selectArea='selectArea' />
+	</view>
+	 <label>
+		<scroll-view scroll-y="true" style="height:100%;position: relative;" scroll-with-animation="true">
+			<view id="top"></view>
+			<block wx:for="{{productList}}" wx:key="item" >
+				<view class="item-root" bindtap="gotoProductDetail" data-id="{{item.id}}" >
+					<image class="productpicture" src="{{item.homepicture}}"></image>
+					<view class="item-detail" >
+						<view class="item-productname">{{item.productname}}</view>
+
+						<view class="item-productname">{{item.businessname}}</view>
+						<view class="item-bargainpersonsum">{{item.bargainpersonsum}}</view>
+						<view class="item-price">
+							<view class="item-bargainprice">{{item.bargainprice}}元</view>
+							<view class="item-originalprice">{{item.originalprice}}元</view>
+							<view class="item-originalprice">{{item.distance}}</view>
+							<button class="barginButton" size="mini" type="primary">{{item.issale}}</button>
+						</view>
+					</view>
+				</view>
+			</block>
+			<view id="bottom"></view>
+		</scroll-view>
+		<view class="nodata" hidden="{{hiddenNoData}}">我是有底线的！</view>
+		<view class="initNoData" hidden="{{initNoData}}">小二正在积极的为您寻找活动商品呦~~</view>
+	</label> 
+
+</view>
