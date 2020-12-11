@@ -1,14 +1,15 @@
 {
   "pages":[
    
-    
+    "pages/startUp/startUp",
     "pages/index/index",
     "pages/productDetail/productDetail",
     "pages/searchProduct/searchProduct",
     "pages/me/me",
     "pages/cityList/cityList",
     "pages/cityArea/cityArea",
-    "pages/getlocation/getlocation"
+    "pages/login/login",
+    "pages/test/test"
     
    
     

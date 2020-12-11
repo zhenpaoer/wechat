@@ -1,0 +1,4 @@
+<!--pages/startUp/startUp.wxml-->
+<view class="startup">
+  <image src="../../static/startup.jpg"></image>
+</view>

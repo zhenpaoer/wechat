@@ -258,7 +258,6 @@ Page({
     var that = this;
     var cityNameList = [];
     wx.request({
-      // url: 'http://localhost:9001/api/area/area/getAllCitys',
       url: 'http://localhost:9001/api/area/area/getAreaById?id=0',
       data:{},
       success(res){
@@ -316,7 +315,6 @@ Page({
     var productType = that.data.productType;
     var priceType =that.data.priceType;
     var sortType =that.data.sortType;
-    var uid = that.data.uid;
     console.log('----loadInitData-1---');
     console.log('cityId',cityId);
     console.log('regionId',regionId);
@@ -329,11 +327,21 @@ Page({
     wx.showLoading({
       title: tips,
     })    
-    // 请封装自己的网络请求接口，这里作为示例就直接使用了wx.request.
+    var token = '';
+    var Authorization = '';
+    token = wx.getStorageSync('token');
+    if(token==''||token==null){
+    }else{
+      Authorization = 'Bearer '+wx.getStorageSync('jwt');
+    }
     wx.request({
-      url: 'http://localhost:9001/api/business/product/allforhome?pageSize='+pageSize+'&pageNo='+currentPage+'&lon='+lon+'&lat='+lat+'&distance='+distance+'&cityId='+cityId+'&regionId='+regionId+'&areaId='+areaId+'&productType='+productType+'&priceType='+priceType+'&sortType='+sortType+'&uid='+uid,   
-      data: {},      
-      header: {'content-type': 'application/json'},      
+      url: 'http://localhost:9001/api/business/product/allforhome?pageSize='+pageSize+'&pageNo='+currentPage+'&lon='+lon+'&lat='+lat+'&distance='+distance+'&cityId='+cityId+'&regionId='+regionId+'&areaId='+areaId+'&productType='+productType+'&priceType='+priceType+'&sortType='+sortType,   
+      data: {},          
+      header:{
+        // 'content-type': 'application/json',
+        token:token,
+        Authorization: Authorization,
+      },
       success (res) {
         wx.hideLoading();
         var data = res.data; 
@@ -390,17 +398,24 @@ Page({
     var productType = that.data.productType;
     var priceType =that.data.priceType;
     var sortType =that.data.sortType;
-    var uid = that.data.uid;
+    var token = '';
+    var Authorization = '';
+    token = wx.getStorageSync('token');
+    if(token==''||token==null){
+    }else{
+      Authorization = 'Bearer '+wx.getStorageSync('jwt');
+    }
     if(that.data.isLeft){
       wx.showLoading({      
         title: tips,
       })   
       // 请封装自己的网络请求接口，这里作为示例就直接使用了wx.request.
       wx.request({      
-        url: 'http://localhost:9001/api/business/product/allforhome?pageSize='+pageSize+'&pageNo='+currentPage+'&lon='+lon+'&lat='+lat+'&distance='+distance+'&cityId='+cityId+'&regionId='+regionId+'&areaId='+areaId+'&productType='+productType+'&priceType='+priceType+'&sortType='+sortType+'&uid='+uid,       
-        data: {},      
+        url: 'http://localhost:9001/api/business/product/allforhome?pageSize='+pageSize+'&pageNo='+currentPage+'&lon='+lon+'&lat='+lat+'&distance='+distance+'&cityId='+cityId+'&regionId='+regionId+'&areaId='+areaId+'&productType='+productType+'&priceType='+priceType+'&sortType='+sortType,    
         header: {    
-          'content-type': 'application/json'
+          // 'content-type': 'application/json',
+          token:token,
+          Authorization: Authorization,
         },      
         success: function (res) {
           wx.hideLoading();        
@@ -409,13 +424,11 @@ Page({
             var total = data.queryResult.total;
             if(total > 0){
               var productList = data.queryResult.list;
-              
               // 将新一页的数据添加到原数据后面
               var originProductList = that.data.productList;        
               var newProductList = originProductList.concat(productList);  
               that.transforIssale(newProductList);
-              that.setData({          
-                // productList: newProductList,         
+              that.setData({        
                 currentPage: currentPage
               })
             }else {
@@ -626,4 +639,75 @@ Page({
     console.log('resetByChangeCity')
     this.selectComponent('#dropDownMenu').reset(e); 
   },
+
+  //砍价按钮
+  bargin(e){
+    var that = this;
+    var dataset = e.currentTarget.dataset;
+    var pid = dataset.id;
+    var value = dataset.value;
+    //判断有没有登陆
+    console.log('进入砍价按钮')
+    if(value == '已砍' || value == '已售'){
+      //触发分享
+      console.log('去分享')
+    }
+    if(value == '砍价'){
+      wx.checkSession({ 
+        success(){
+          //判断是不是已砍
+          console.log('已经登录了')
+          var token= wx.getStorageSync('token');
+          var jwt = wx.getStorageSync('jwt');
+          var afterbargainprice = '';
+          wx.request({
+            url: 'http://localhost:9001/api/business/product/bargain',
+            header:{
+              token:token,
+              Authorization: 'Bearer '+jwt,
+            },
+            data:{pid:pid},
+            success(res){
+              var productList = that.data.productList;
+              for(let i = 0;i<productList.length;i++){
+                if(productList[i].id == pid ){
+                  var bargainPrice = '砍了'+res.data.data.bargainPrice;
+                  afterbargainprice = res.data.data.afterBargainPrice;
+                  var afterBargainPerson = res.data.data.bargainPerson;
+                  value = '已砍';
+                  console.log('新bargainprice=',afterbargainprice);
+                  var tempIsSale = "productList["+i+"].issale";
+                  var tempPrice = "productList["+i+"].bargainprice";
+                  var tempBargainPerson = "productList["+i+"].bargainpersonsum";
+                  that.setData({
+                    [tempIsSale]:value,
+                    [tempPrice]:bargainPrice,
+                  })
+                  setTimeout(function () {
+                    console.log('等2秒')
+                    that.setData({
+                      [tempPrice]:afterbargainprice,
+                      [tempBargainPerson]:afterBargainPerson,
+                    })
+                   }, 2000) //延迟时间 这里是1秒
+                  break;
+                }
+              };
+            }
+          })
+        },
+        fail(){
+          //跳转到login页面
+          that.setData({reLoadData: true,})
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        }
+      })
+    }else{
+      console.log('value=',value);
+    }
+    
+    
+  }
 })

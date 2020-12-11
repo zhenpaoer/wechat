@@ -19,18 +19,18 @@
 		<scroll-view scroll-y="true" style="height:100%;position: relative;" scroll-with-animation="true">
 			<view id="top"></view>
 			<block wx:for="{{productList}}" wx:key="item" >
-				<view class="item-root" bindtap="gotoProductDetail" data-id="{{item.id}}" >
+				 <view class="item-root"  > <!--bindtap="gotoProductDetail" data-id="{{item.id}}" -->
 					<image class="productpicture" src="{{item.homepicture}}"></image>
-					<view class="item-detail" >
+					<view class="item-detail" bindtap="gotoProductDetail" data-id="{{item.id}}" >
 						<view class="item-productname">{{item.productname}}</view>
 
 						<view class="item-productname">{{item.businessname}}</view>
 						<view class="item-bargainpersonsum">{{item.bargainpersonsum}}</view>
 						<view class="item-price">
-							<view class="item-bargainprice">{{item.bargainprice}}元</view>
-							<view class="item-originalprice">{{item.originalprice}}元</view>
-							<view class="item-originalprice">{{item.distance}}</view>
-							<button class="barginButton" size="mini" type="primary">{{item.issale}}</button>
+							<view class="item-bargainprice" value="{{item.bargainprice}}元">{{item.bargainprice}}元</view>
+							<view class="item-originalprice" value="{{item.originalprice}}元">{{item.originalprice}}元</view>
+							<view class="item-distance">{{item.distance}}</view>
+							<button class="barginButton" size="mini" type="primary" catchtap='bargin' hover-stop-propagation='true' data-id="{{item.id}}" data-value="{{item.issale}}" >{{item.issale}}</button>
 						</view>
 					</view>
 				</view>

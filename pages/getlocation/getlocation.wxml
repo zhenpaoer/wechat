@@ -1,9 +1,0 @@
-<!--pages/getlocation/getlocation.wxml-->
-
-<view class="home-city">
-		<text class="home-getusercity" bindtap="getoCityList">{{cityName}}▽</text>
-		<text class="home-getuserarea" bindtap="getoCityArea">{{area}}▽</text>  
-		<text class="home-getuseraddress" >    {{address}}</text>
-</view>
-<dropdownmenu dropDownMenuTitle='{{dropDownMenuTitle}}' dropDownMenuDistrictData='{{data1}}' dropDownMenuSourceData='{{data2}}' dropDownMenuStyleData='{{data3}}' dropDownMenuFilterData='{{data4}}'
-  bind:selectedItem='selectedItem' />

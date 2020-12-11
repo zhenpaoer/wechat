@@ -1,0 +1,3 @@
+<!--pages/test/test.wxml-->
+<text>pages/test/test.wxml</text>
+<button bindtap="btn" type="primary">test</button>
